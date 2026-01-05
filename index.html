@@ -127,8 +127,8 @@
       </div>
       <div class="filters" aria-label="filters">
         <button class="btn active" data-filter="all">All</button>
-        <button class="btn" data-filter="mv">MV</button>
         <button class="btn" data-filter="commercial">Ads / Shorts</button>
+        <button class="btn" data-filter="mv">MV</button>
       </div>
     </div>
   </header>
@@ -198,9 +198,9 @@
       const commercial = filtered.filter(x => x.category === "commercial");
 
       appEl.innerHTML = [
-        mv.length ? sectionHTML("MV", "Music Videos", mv) : "",
-        commercial.length ? sectionHTML("Commercial", "Ads / Branded Content", commercial) : ""
-      ].join("");
+  commercial.length ? sectionHTML("Commercial", "Ads / Branded Content", commercial) : "",
+  mv.length ? sectionHTML("MV", "Music Videos", mv) : ""
+].join("");
 
       // ตั้งรูปปก YouTube thumbnail
       document.querySelectorAll(".yt-hover").forEach(el => {
