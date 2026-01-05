@@ -159,16 +159,15 @@
       }
 
       // Instagram (ภาพนิ่ง + ลิงก์ออกไป)
-      const thumb = item.thumb && item.thumb.trim()
-        ? item.thumb
-        : "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1600' height='900'%3E%3Crect width='100%25' height='100%25' fill='%23f4f4f4'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='42' fill='%23666' text-anchor='middle' dominant-baseline='middle'%3ETwitter:%20Instagram%3C/text%3E%3C/svg%3E";
+      const thumb = item.cover
+  ? item.cover
+  : getYoutubeThumbnail(item.id);
 
       return `
         <a class="item" href="${item.url}" target="_blank" rel="noopener">
           <div class="thumb">
-            <span class="badge">Instagram</span>
-            <img alt="${escapeHtml(item.title)}" loading="lazy" src="${thumb}">
-          </div>
+  <img src="${thumb}" alt="${item.title}">
+</div>
           <div class="meta">
             <p class="title">${escapeHtml(item.title)}</p>
             <p class="sub">Instagram</p>
