@@ -1,324 +1,308 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!doctype html>
+<html lang="th">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2487.7">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Video Portfolio</title>
+  <style>
+    :root{ --gap:18px; --radius:14px; --text:#111; --muted:#666; --card:#f4f4f4; }
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      color:var(--text);
+      background:#fff;
+    }
+    header{ max-width:1100px; margin:0 auto; padding:28px 20px 8px; }
+    h1{ margin:0 0 6px; font-size:22px; }
+    p{ margin:0; color:var(--muted); }
+    main{ max-width:1100px; margin:0 auto; padding:18px 20px 52px; }
+
+    .topbar{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:12px; margin-top:10px;
+    }
+    .filters{ display:flex; gap:8px; flex-wrap:wrap; }
+    .btn{
+      border:0; background:#eee; color:#111;
+      padding:7px 10px; border-radius:999px; cursor:pointer;
+      font-size:12px;
+    }
+    .btn.active{ background:#111; color:#fff; }
+
+    .section{ margin-top: 26px; }
+    .section:first-child{ margin-top: 14px; }
+    .section-head{
+      display:flex; align-items:baseline; justify-content:space-between;
+      gap:12px; margin: 0 0 12px;
+    }
+    .section-title{ margin:0; font-size:15px; letter-spacing:.2px; }
+    .section-note{ margin:0; font-size:12px; color:var(--muted); }
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(3, minmax(0, 1fr));
+      gap:var(--gap);
+    }
+    @media (max-width: 920px){ .grid{ grid-template-columns:repeat(2, 1fr); } }
+    @media (max-width: 560px){ .grid{ grid-template-columns:1fr; } }
+
+    .item{ text-decoration:none; color:inherit; display:block; }
+    .thumb{
+      position:relative;
+      width:100%;
+      aspect-ratio:16/9;
+      border-radius:var(--radius);
+      overflow:hidden;
+      background:var(--card);
+    }
+    .thumb img, .thumb .player{
+      position:absolute; inset:0;
+      width:100%; height:100%;
+    }
+    .thumb img{ object-fit:cover; transition:opacity 160ms ease; }
+    .thumb.is-playing img{ opacity:0; }
+    .thumb .player{ opacity:0; transition:opacity 160ms ease; }
+    .thumb.is-playing .player{ opacity:1; }
+
+    .thumb::after{
+      content:"";
+      position:absolute; inset:0;
+      box-shadow: 0 0 0 1px rgba(0,0,0,.06) inset;
+      border-radius:var(--radius);
+      pointer-events:none;
+    }
+    .meta{ padding:10px 2px 0; }
+    .title{ margin:0; font-size:14px; line-height:1.35; }
+    .sub{ margin:6px 0 0; font-size:12px; color:var(--muted); }
+
+    .badge{
+      position:absolute; left:10px; top:10px;
+      font-size:11px; padding:6px 8px; border-radius:999px;
+      background:rgba(0,0,0,.65); color:#fff; z-index:2;
+    }
   </style>
 </head>
 <body>
-<p class="p1">&lt;!doctype html&gt;</p>
-<p class="p1">&lt;html lang="th"&gt;</p>
-<p class="p1">&lt;head&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta charset="utf-8" /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1" /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;title&gt;Video Portfolio&lt;/title&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;style&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>:root{ --gap:18px; --radius:14px; --text:#111; --muted:#666; --card:#f4f4f4; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>*{ box-sizing:border-box; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>body{</p>
-<p class="p1"><span class="Apple-converted-space">      </span>margin:0;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>color:var(--text);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>background:#fff;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>header{ max-width:1100px; margin:0 auto; padding:28px 20px 8px; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>h1{ margin:0 0 6px; font-size:22px; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>p{ margin:0; color:var(--muted); }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>main{ max-width:1100px; margin:0 auto; padding:18px 20px 52px; }</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.topbar{</p>
-<p class="p1"><span class="Apple-converted-space">      </span>display:flex; align-items:center; justify-content:space-between;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>gap:12px; margin-top:10px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.filters{ display:flex; gap:8px; flex-wrap:wrap; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.btn{</p>
-<p class="p1"><span class="Apple-converted-space">      </span>border:0; background:#eee; color:#111;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>padding:7px 10px; border-radius:999px; cursor:pointer;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-size:12px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.btn.active{ background:#111; color:#fff; }</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.section{ margin-top: 26px; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.section:first-child{ margin-top: 14px; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.section-head{</p>
-<p class="p1"><span class="Apple-converted-space">      </span>display:flex; align-items:baseline; justify-content:space-between;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>gap:12px; margin: 0 0 12px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.section-title{ margin:0; font-size:15px; letter-spacing:.2px; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.section-note{ margin:0; font-size:12px; color:var(--muted); }</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.grid{</p>
-<p class="p1"><span class="Apple-converted-space">      </span>display:grid;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>grid-template-columns:repeat(3, minmax(0, 1fr));</p>
-<p class="p1"><span class="Apple-converted-space">      </span>gap:var(--gap);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>@media (max-width: 920px){ .grid{ grid-template-columns:repeat(2, 1fr); } }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>@media (max-width: 560px){ .grid{ grid-template-columns:1fr; } }</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.item{ text-decoration:none; color:inherit; display:block; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.thumb{</p>
-<p class="p1"><span class="Apple-converted-space">      </span>position:relative;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>width:100%;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>aspect-ratio:16/9;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>border-radius:var(--radius);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>overflow:hidden;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>background:var(--card);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.thumb img, .thumb .player{</p>
-<p class="p1"><span class="Apple-converted-space">      </span>position:absolute; inset:0;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>width:100%; height:100%;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.thumb img{ object-fit:cover; transition:opacity 160ms ease; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.thumb.is-playing img{ opacity:0; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.thumb .player{ opacity:0; transition:opacity 160ms ease; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.thumb.is-playing .player{ opacity:1; }</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.thumb::after{</p>
-<p class="p1"><span class="Apple-converted-space">      </span>content:"";</p>
-<p class="p1"><span class="Apple-converted-space">      </span>position:absolute; inset:0;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>box-shadow: 0 0 0 1px rgba(0,0,0,.06) inset;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>border-radius:var(--radius);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>pointer-events:none;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.meta{ padding:10px 2px 0; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.title{ margin:0; font-size:14px; line-height:1.35; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.sub{ margin:6px 0 0; font-size:12px; color:var(--muted); }</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.badge{</p>
-<p class="p1"><span class="Apple-converted-space">      </span>position:absolute; left:10px; top:10px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-size:11px; padding:6px 8px; border-radius:999px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>background:rgba(0,0,0,.65); color:#fff; z-index:2;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/style&gt;</p>
-<p class="p1">&lt;/head&gt;</p>
-<p class="p1">&lt;body&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;header&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="topbar"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;h1&gt;Video Portfolio&lt;/h1&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;p&gt;Hover ที่ภาพเพื่อดูตัวอย่าง (Muted / Loop) • คลิกเพื่อเปิดลิงก์&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="filters" aria-label="filters"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;button class="btn active" data-filter="all"&gt;All&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;button class="btn" data-filter="mv"&gt;MV&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;button class="btn" data-filter="commercial"&gt;Commercial&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/header&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;main id="app"&gt;&lt;/main&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;!-- YouTube IFrame API --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;script src="https://www.youtube.com/iframe_api"&gt;&lt;/script&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;script&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const DATA_URL = "data/projects.json";</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>// ---------- Render ----------</p>
-<p class="p1"><span class="Apple-converted-space">    </span>function cardHTML(item) {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>if (item.platform === "youtube") {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const href = `https://youtu.be/${item.id}`;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>return `</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;a class="item" href="${href}" target="_blank" rel="noopener"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="thumb yt-hover" data-video="${item.id}"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;img alt="${escapeHtml(item.title)}" loading="lazy"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;div class="player"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="meta"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;p class="title"&gt;${escapeHtml(item.title)}&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>&lt;p class="sub"&gt;YouTube&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;/a&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>`;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>// Instagram (ภาพนิ่ง + ลิงก์ออกไป)</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const thumb = item.thumb &amp;&amp; item.thumb.trim()</p>
-<p class="p1"><span class="Apple-converted-space">        </span>? item.thumb</p>
-<p class="p1"><span class="Apple-converted-space">        </span>: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1600' height='900'%3E%3Crect width='100%25' height='100%25' fill='%23f4f4f4'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='42' fill='%23666' text-anchor='middle' dominant-baseline='middle'%3ETwitter:%20Instagram%3C/text%3E%3C/svg%3E";</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>return `</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;a class="item" href="${item.url}" target="_blank" rel="noopener"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="thumb"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;span class="badge"&gt;Instagram&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;img alt="${escapeHtml(item.title)}" loading="lazy" src="${thumb}"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="meta"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;p class="title"&gt;${escapeHtml(item.title)}&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;p class="sub"&gt;Instagram&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/a&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>`;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>function sectionHTML(title, note, items) {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>return `</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;section class="section"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="section-head"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;h2 class="section-title"&gt;${escapeHtml(title)}&lt;/h2&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;p class="section-note"&gt;${escapeHtml(note)}&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="grid"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>${items.map(cardHTML).join("")}</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>`;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>function render(appEl, data, filter) {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const filtered = (filter === "all") ? data : data.filter(x =&gt; x.category === filter);</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>const mv = filtered.filter(x =&gt; x.category === "mv");</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const commercial = filtered.filter(x =&gt; x.category === "commercial");</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>appEl.innerHTML = [</p>
-<p class="p1"><span class="Apple-converted-space">        </span>mv.length ? sectionHTML("MV", "Music Videos", mv) : "",</p>
-<p class="p1"><span class="Apple-converted-space">        </span>commercial.length ? sectionHTML("Commercial", "Ads / Branded Content", commercial) : ""</p>
-<p class="p1"><span class="Apple-converted-space">      </span>].join("");</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>// ตั้งรูปปก YouTube thumbnail</p>
-<p class="p1"><span class="Apple-converted-space">      </span>document.querySelectorAll(".yt-hover").forEach(el =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const id = el.dataset.video;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const img = el.querySelector("img");</p>
-<p class="p1"><span class="Apple-converted-space">        </span>img.src = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>});</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>// หลัง render เสร็จ ค่อย bind hover (ถ้า API พร้อมแล้ว)</p>
-<p class="p1"><span class="Apple-converted-space">      </span>if (window.__YT_READY__) {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>bindHover();</p>
-<p class="p1"><span class="Apple-converted-space">      </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>// ---------- YouTube Hover Preview ----------</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const players = new Map(); // el -&gt; YT.Player</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>function ensurePlayer(el) {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>if (players.has(el)) return players.get(el);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const id = el.dataset.video;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const mount = el.querySelector(".player");</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>const player = new YT.Player(mount, {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>videoId: id,</p>
-<p class="p1"><span class="Apple-converted-space">        </span>playerVars: {</p>
-<p class="p1"><span class="Apple-converted-space">          </span>autoplay: 0,</p>
-<p class="p1"><span class="Apple-converted-space">          </span>controls: 0,</p>
-<p class="p1"><span class="Apple-converted-space">          </span>modestbranding: 1,</p>
-<p class="p1"><span class="Apple-converted-space">          </span>rel: 0,</p>
-<p class="p1"><span class="Apple-converted-space">          </span>playsinline: 1</p>
-<p class="p1"><span class="Apple-converted-space">        </span>},</p>
-<p class="p1"><span class="Apple-converted-space">        </span>events: {</p>
-<p class="p1"><span class="Apple-converted-space">          </span>onReady: (e) =&gt; e.target.mute()</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">      </span>});</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>players.set(el, player);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>return player;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>function play(el) {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>el.classList.add("is-playing");</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const p = ensurePlayer(el);</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>// loop แบบเนียน: ใกล้จบแล้ว seek กลับ</p>
-<p class="p1"><span class="Apple-converted-space">      </span>if (!el._loopTimer) {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>el._loopTimer = setInterval(() =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">          </span>try {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const dur = p.getDuration?.() || 0;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const cur = p.getCurrentTime?.() || 0;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>if (dur &amp;&amp; cur &gt; dur - 0.25) p.seekTo(0, true);</p>
-<p class="p1"><span class="Apple-converted-space">          </span>} catch {}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}, 200);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>// บางที player ยังไม่พร้อมทันที → ลองซ้ำสั้นๆ</p>
-<p class="p1"><span class="Apple-converted-space">      </span>let tries = 0;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const t = setInterval(() =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>tries++;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>try {</p>
-<p class="p1"><span class="Apple-converted-space">          </span>if (p?.playVideo) {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>p.mute();</p>
-<p class="p1"><span class="Apple-converted-space">            </span>p.playVideo();</p>
-<p class="p1"><span class="Apple-converted-space">            </span>clearInterval(t);</p>
-<p class="p1"><span class="Apple-converted-space">          </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>} catch {}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>if (tries &gt; 20) clearInterval(t);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>}, 50);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>function stop(el) {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const p = players.get(el);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>if (p?.pauseVideo) {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>try { p.pauseVideo(); } catch {}</p>
-<p class="p1"><span class="Apple-converted-space">      </span>}</p>
-<p class="p1"><span class="Apple-converted-space">      </span>el.classList.remove("is-playing");</p>
-<p class="p1"><span class="Apple-converted-space">      </span>if (el._loopTimer) {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>clearInterval(el._loopTimer);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>el._loopTimer = null;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>function bindHover() {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>document.querySelectorAll(".yt-hover").forEach(el =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>if (el.__bound) return;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>el.__bound = true;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>el.addEventListener("mouseenter", () =&gt; play(el));</p>
-<p class="p1"><span class="Apple-converted-space">        </span>el.addEventListener("mouseleave", () =&gt; stop(el));</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>// มือถือ: แตะครั้งแรก = preview สั้นๆ (กันเด้งไปลิงก์ทันที)</p>
-<p class="p1"><span class="Apple-converted-space">        </span>el.addEventListener("touchstart", (ev) =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">          </span>if (!el.classList.contains("is-playing")) {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>ev.preventDefault();</p>
-<p class="p1"><span class="Apple-converted-space">            </span>play(el);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>setTimeout(() =&gt; stop(el), 2000);</p>
-<p class="p1"><span class="Apple-converted-space">          </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}, { passive: false });</p>
-<p class="p1"><span class="Apple-converted-space">      </span>});</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>// YouTube API callback</p>
-<p class="p1"><span class="Apple-converted-space">    </span>window.onYouTubeIframeAPIReady = () =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>window.__YT_READY__ = true;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>bindHover();</p>
-<p class="p1"><span class="Apple-converted-space">    </span>};</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>// ---------- Init ----------</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const app = document.getElementById("app");</p>
-<p class="p1"><span class="Apple-converted-space">    </span>let projects = [];</p>
-<p class="p1"><span class="Apple-converted-space">    </span>let currentFilter = "all";</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>function escapeHtml(str) {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>return String(str ?? "").replace(/[&amp;&lt;&gt;"']/g, s =&gt; ({</p>
-<p class="p1"><span class="Apple-converted-space">        </span>"&amp;":"&amp;amp;","&lt;":"&amp;lt;","&gt;":"&amp;gt;",'"':"&amp;quot;","'":"&amp;#039;"</p>
-<p class="p1"><span class="Apple-converted-space">      </span>}[s]));</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>fetch(DATA_URL)</p>
-<p class="p1"><span class="Apple-converted-space">      </span>.then(r =&gt; r.json())</p>
-<p class="p1"><span class="Apple-converted-space">      </span>.then(data =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>projects = data;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>render(app, projects, currentFilter);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>})</p>
-<p class="p1"><span class="Apple-converted-space">      </span>.catch(err =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>app.innerHTML = `&lt;p style="color:#b00"&gt;โหลดข้อมูลไม่สำเร็จ: ${escapeHtml(err.message)}&lt;/p&gt;`;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>});</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>// filter buttons</p>
-<p class="p1"><span class="Apple-converted-space">    </span>document.querySelectorAll(".btn[data-filter]").forEach(btn =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>btn.addEventListener("click", () =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>document.querySelector(".btn.active")?.classList.remove("active");</p>
-<p class="p1"><span class="Apple-converted-space">        </span>btn.classList.add("active");</p>
-<p class="p1"><span class="Apple-converted-space">        </span>currentFilter = btn.dataset.filter;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>render(app, projects, currentFilter);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>});</p>
-<p class="p1"><span class="Apple-converted-space">    </span>});</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/script&gt;</p>
-<p class="p1">&lt;/body&gt;</p>
-<p class="p1">&lt;/html&gt;</p>
+  <header>
+    <div class="topbar">
+      <div>
+        <h1>Video Portfolio</h1>
+        <p>Hover ที่ภาพเพื่อดูตัวอย่าง (Muted / Loop) • คลิกเพื่อเปิดลิงก์</p>
+      </div>
+      <div class="filters" aria-label="filters">
+        <button class="btn active" data-filter="all">All</button>
+        <button class="btn" data-filter="mv">MV</button>
+        <button class="btn" data-filter="commercial">Commercial</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="app"></main>
+
+  <!-- YouTube IFrame API -->
+  <script src="https://www.youtube.com/iframe_api"></script>
+  <script>
+    const DATA_URL = "data/projects.json";
+
+    // ---------- Render ----------
+    function cardHTML(item) {
+      if (item.platform === "youtube") {
+        const href = `https://youtu.be/${item.id}`;
+        return `
+          <a class="item" href="${href}" target="_blank" rel="noopener">
+            <div class="thumb yt-hover" data-video="${item.id}">
+              <img alt="${escapeHtml(item.title)}" loading="lazy">
+              <div class="player"></div>
+            </div>
+            <div class="meta">
+              <p class="title">${escapeHtml(item.title)}</p>
+              <p class="sub">YouTube</p>
+            </div>
+          </a>
+        `;
+      }
+
+      // Instagram (ภาพนิ่ง + ลิงก์ออกไป)
+      const thumb = item.thumb && item.thumb.trim()
+        ? item.thumb
+        : "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1600' height='900'%3E%3Crect width='100%25' height='100%25' fill='%23f4f4f4'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='42' fill='%23666' text-anchor='middle' dominant-baseline='middle'%3ETwitter:%20Instagram%3C/text%3E%3C/svg%3E";
+
+      return `
+        <a class="item" href="${item.url}" target="_blank" rel="noopener">
+          <div class="thumb">
+            <span class="badge">Instagram</span>
+            <img alt="${escapeHtml(item.title)}" loading="lazy" src="${thumb}">
+          </div>
+          <div class="meta">
+            <p class="title">${escapeHtml(item.title)}</p>
+            <p class="sub">Instagram</p>
+          </div>
+        </a>
+      `;
+    }
+
+    function sectionHTML(title, note, items) {
+      return `
+        <section class="section">
+          <div class="section-head">
+            <h2 class="section-title">${escapeHtml(title)}</h2>
+            <p class="section-note">${escapeHtml(note)}</p>
+          </div>
+          <div class="grid">
+            ${items.map(cardHTML).join("")}
+          </div>
+        </section>
+      `;
+    }
+
+    function render(appEl, data, filter) {
+      const filtered = (filter === "all") ? data : data.filter(x => x.category === filter);
+
+      const mv = filtered.filter(x => x.category === "mv");
+      const commercial = filtered.filter(x => x.category === "commercial");
+
+      appEl.innerHTML = [
+        mv.length ? sectionHTML("MV", "Music Videos", mv) : "",
+        commercial.length ? sectionHTML("Commercial", "Ads / Branded Content", commercial) : ""
+      ].join("");
+
+      // ตั้งรูปปก YouTube thumbnail
+      document.querySelectorAll(".yt-hover").forEach(el => {
+        const id = el.dataset.video;
+        const img = el.querySelector("img");
+        img.src = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+      });
+
+      // หลัง render เสร็จ ค่อย bind hover (ถ้า API พร้อมแล้ว)
+      if (window.__YT_READY__) {
+        bindHover();
+      }
+    }
+
+    // ---------- YouTube Hover Preview ----------
+    const players = new Map(); // el -> YT.Player
+
+    function ensurePlayer(el) {
+      if (players.has(el)) return players.get(el);
+      const id = el.dataset.video;
+      const mount = el.querySelector(".player");
+
+      const player = new YT.Player(mount, {
+        videoId: id,
+        playerVars: {
+          autoplay: 0,
+          controls: 0,
+          modestbranding: 1,
+          rel: 0,
+          playsinline: 1
+        },
+        events: {
+          onReady: (e) => e.target.mute()
+        }
+      });
+
+      players.set(el, player);
+      return player;
+    }
+
+    function play(el) {
+      el.classList.add("is-playing");
+      const p = ensurePlayer(el);
+
+      // loop แบบเนียน: ใกล้จบแล้ว seek กลับ
+      if (!el._loopTimer) {
+        el._loopTimer = setInterval(() => {
+          try {
+            const dur = p.getDuration?.() || 0;
+            const cur = p.getCurrentTime?.() || 0;
+            if (dur && cur > dur - 0.25) p.seekTo(0, true);
+          } catch {}
+        }, 200);
+      }
+
+      // บางที player ยังไม่พร้อมทันที → ลองซ้ำสั้นๆ
+      let tries = 0;
+      const t = setInterval(() => {
+        tries++;
+        try {
+          if (p?.playVideo) {
+            p.mute();
+            p.playVideo();
+            clearInterval(t);
+          }
+        } catch {}
+        if (tries > 20) clearInterval(t);
+      }, 50);
+    }
+
+    function stop(el) {
+      const p = players.get(el);
+      if (p?.pauseVideo) {
+        try { p.pauseVideo(); } catch {}
+      }
+      el.classList.remove("is-playing");
+      if (el._loopTimer) {
+        clearInterval(el._loopTimer);
+        el._loopTimer = null;
+      }
+    }
+
+    function bindHover() {
+      document.querySelectorAll(".yt-hover").forEach(el => {
+        if (el.__bound) return;
+        el.__bound = true;
+
+        el.addEventListener("mouseenter", () => play(el));
+        el.addEventListener("mouseleave", () => stop(el));
+
+        // มือถือ: แตะครั้งแรก = preview สั้นๆ (กันเด้งไปลิงก์ทันที)
+        el.addEventListener("touchstart", (ev) => {
+          if (!el.classList.contains("is-playing")) {
+            ev.preventDefault();
+            play(el);
+            setTimeout(() => stop(el), 2000);
+          }
+        }, { passive: false });
+      });
+    }
+
+    // YouTube API callback
+    window.onYouTubeIframeAPIReady = () => {
+      window.__YT_READY__ = true;
+      bindHover();
+    };
+
+    // ---------- Init ----------
+    const app = document.getElementById("app");
+    let projects = [];
+    let currentFilter = "all";
+
+    function escapeHtml(str) {
+      return String(str ?? "").replace(/[&<>"']/g, s => ({
+        "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+      }[s]));
+    }
+
+    fetch(DATA_URL)
+      .then(r => r.json())
+      .then(data => {
+        projects = data;
+        render(app, projects, currentFilter);
+      })
+      .catch(err => {
+        app.innerHTML = `<p style="color:#b00">โหลดข้อมูลไม่สำเร็จ: ${escapeHtml(err.message)}</p>`;
+      });
+
+    // filter buttons
+    document.querySelectorAll(".btn[data-filter]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelector(".btn.active")?.classList.remove("active");
+        btn.classList.add("active");
+        currentFilter = btn.dataset.filter;
+        render(app, projects, currentFilter);
+      });
+    });
+  </script>
 </body>
 </html>
