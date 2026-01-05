@@ -198,7 +198,7 @@
       const commercial = filtered.filter(x => x.category === "commercial");
 
       appEl.innerHTML = [
-  commercial.length ? sectionHTML("Commercial", "Ads / Branded Content", commercial) : "",
+  commercial.length ? sectionHTML("Commercial / Shorts", "Ads / Branded Content", commercial) : "",
   mv.length ? sectionHTML("MV", "Music Videos", mv) : ""
 ].join("");
 
