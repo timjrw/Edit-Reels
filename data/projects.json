@@ -5,11 +5,13 @@
   { "platform": "youtube", "id": "MjqfU5DF0ZU", "title": "First Choice - First Generation", "category": "commercial" },
   { "platform": "youtube", "id": "C9-hQuDdLQI", "title": "Central Park Bangkok", "category": "commercial" },
   { "platform": "youtube", "id": "hP8tdQwBuOk", "title": "AIS5G x BUS", "category": "commercial" },
+  { "platform": "youtube", "id": "qfDhE_nThY0", "title": "D-nee Blooming Glow Series", "category": "commercial" },
   {
     "platform": "instagram",
     "title": "#PradaGalleria",
     "category": "commercial",
     "url": "https://www.instagram.com/p/DSYu8-5geDR/"
+    "cover": "/assets/covers/prada-galleria.jpg"
   },
   { "platform": "youtube", "id": "SDFCGK8lGeI", "title": "PERSES - BODYGUARD (MV)", "category": "mv" },
   { "platform": "youtube", "id": "KQF6M-3URC8", "title": "BUS - LIAR (MV)", "category": "mv" },
