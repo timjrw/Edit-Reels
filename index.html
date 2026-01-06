@@ -300,9 +300,92 @@ body::before{
   z-index: 0;
 }
 header, main{ position: relative; z-index: 1; }
+    /* กระดาษหลัก */
+.sheet{
+  max-width: 1140px;
+  margin: 26px auto 60px;
+  padding: 34px 22px 44px;
+  position: relative;
+
+  background: rgba(255,255,255,.72);
+  border: 1px solid rgba(0,0,0,.10);
+  border-radius: 14px;
+
+  /* เงาเบา ๆ ให้เหมือนกระดาษวางบนโต๊ะ */
+  box-shadow:
+    0 1px 0 rgba(0,0,0,.05),
+    0 18px 45px rgba(0,0,0,.06);
+}
+
+/* เส้นแบ่งเป็นช่อง ๆ (แนวตั้ง+แนวนอน) */
+.sheet{
+  background-image:
+    /* แนวตั้ง */
+    repeating-linear-gradient(
+      90deg,
+      rgba(0,0,0,.085) 0px,
+      rgba(0,0,0,.085) 1px,
+      transparent 1px,
+      transparent 64px
+    ),
+    /* แนวนอน */
+    repeating-linear-gradient(
+      0deg,
+      rgba(0,0,0,.07) 0px,
+      rgba(0,0,0,.07) 1px,
+      transparent 1px,
+      transparent 48px
+    );
+  background-blend-mode: multiply;
+}
+
+/* เส้น “ตัด/ฉีก” เป็นรูปรอยปรุ (perforation) */
+.sheet::after{
+  content:"";
+  position:absolute;
+  left: 56px;     /* ระยะจากขอบซ้าย */
+  top: 16px;
+  bottom: 16px;
+  width: 2px;
+
+  /* ทำเป็นเส้นประเนียน ๆ */
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0,0,0,.25) 0 6px,
+    transparent 6px 14px
+  );
+  opacity: .35;
+}
+
+/* รูเจาะกระดาษด้านซ้าย */
+.sheet::before{
+  content:"";
+  position:absolute;
+  left: 18px;
+  top: 22px;
+  bottom: 22px;
+  width: 22px;
+  pointer-events:none;
+
+  /* ทำรูเจาะหลายรูด้วย repeating-radial-gradient */
+  background:
+    repeating-radial-gradient(
+      circle at 11px 16px,
+      rgba(0,0,0,.20) 0 1px,      /* ring */
+      transparent 1px 6px,
+      transparent 6px 44px        /* ระยะห่างรู */
+    );
+  opacity: .55;
+}
+
+/* ทำ “รู” ให้เหมือนเจาะจริง (มีไฮไลต์/เงา) */
+.sheet::before{
+  filter: drop-shadow(0 1px 0 rgba(255,255,255,.55));
+}
   </style>
 </head>
 <body>
+ <div class="sheet">
   <header>
     <div class="hero--art">
         <h1 class="hero-name">Tim Jirawangso</h1>
@@ -317,6 +400,7 @@ header, main{ position: relative; z-index: 1; }
   </header>
 
   <main id="app"></main>
+  </div>
 
   <!-- YouTube IFrame API -->
   <script src="https://www.youtube.com/iframe_api"></script>
