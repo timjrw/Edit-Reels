@@ -45,11 +45,16 @@
       gap:var(--gap);
     }
     @media (max-width: 920px){ .grid{ grid-template-columns:repeat(2, 1fr); } }
-    @media (max-width: 820px){ .grid{ grid-template-columns:1fr; } }
+    @media (max-width: 820px){
+  .grid{
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+}
     @media (max-width: 640px){
   :root{ --gap: 14px; }
-  .meta{ padding-top: 12px; }
-  .title{ font-size: 15px; line-height: 1.4; }
+  .meta{ padding-top: 8px; }
+  .title{ font-size: 14px; line-height: 1.35; }
 }
 
     .item{ text-decoration:none; color:inherit; display:block; }
@@ -165,6 +170,13 @@
     background: rgba(255,255,255,.92);
     backdrop-filter: blur(8px);
     z-index: 5;
+  }
+}
+    /* Desktop: ลดขนาด card */
+@media (min-width: 821px){
+  .item{
+    transform: scale(0.95);
+    transform-origin: top center;
   }
 }
   </style>
