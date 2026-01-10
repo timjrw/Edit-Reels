@@ -1,10 +1,24 @@
 :root{
-  --paper:#f6f5ef;
-  --paper-warm:#f1efe7;
+  /* off-white base (ลดความเหลือง) */
+  --cloud-dancer:#f7f7f3;     /* off white กว่าเดิม */
+  --paper: var(--cloud-dancer);
+  --paper-warm:#f1efe7;       /* เหลืองไว้แค่นิดเดียว */
+
   --graphite:#1c1c1c;
   --muted: rgba(28,28,28,.55);
+
   --scarlet:#c4161c;
   --ticket-yellow:#efe36a;
+
+  /* solid grid lines */
+  --grid-r: 196; --grid-g: 22; --grid-b: 28;
+  --grid-w: 2px;
+  --grid-a: .55;              /* ความเข้มเส้นแดงฐาน */
+  --fade-hover: .18;          /* fade ตอน hover การ์ด (ยิ่งน้อยยิ่งจาง) */
+
+  /* corners */
+  --r-soft: 12px;             /* thumbnail */
+  --r-hard: 0px;              /* brutal corners */
 }
 
 *{ box-sizing:border-box; }
@@ -13,21 +27,26 @@ body{
   margin:0;
   font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
   color:var(--graphite);
-  background: linear-gradient(180deg, var(--paper), var(--paper-warm));
+
+  /* ลดความเหลือง: ให้ส่วนใหญ่เป็น off-white */
+  background: linear-gradient(180deg, var(--cloud-dancer), rgba(241,239,231,.55));
   position: relative;
 }
 
-/* film grain */
+/* film grain (เพิ่ม grain ให้ชัดขึ้น) */
 body::before{
   content:"";
   position: fixed;
   inset: 0;
   pointer-events: none;
   background-image:
-    repeating-linear-gradient(0deg, rgba(0,0,0,.018) 0px, rgba(0,0,0,.018) 1px, transparent 1px, transparent 2px),
-    repeating-linear-gradient(90deg, rgba(0,0,0,.012) 0px, rgba(0,0,0,.012) 1px, transparent 1px, transparent 3px),
-    repeating-linear-gradient(45deg, rgba(0,0,0,.010) 0px, rgba(0,0,0,.010) 1px, transparent 1px, transparent 4px);
-  opacity: .35;
+    /* tighter noise */
+    repeating-linear-gradient(0deg, rgba(0,0,0,.020) 0px, rgba(0,0,0,.020) 1px, transparent 1px, transparent 2px),
+    repeating-linear-gradient(90deg, rgba(0,0,0,.016) 0px, rgba(0,0,0,.016) 1px, transparent 1px, transparent 3px),
+    repeating-linear-gradient(45deg, rgba(0,0,0,.014) 0px, rgba(0,0,0,.014) 1px, transparent 1px, transparent 4px),
+    /* extra layer for stronger grain */
+    repeating-linear-gradient(135deg, rgba(0,0,0,.010) 0px, rgba(0,0,0,.010) 1px, transparent 1px, transparent 5px);
+  opacity: .48;               /* เพิ่มจากเดิม (.35) */
   mix-blend-mode: multiply;
   z-index: 0;
 }
@@ -50,7 +69,7 @@ header{
 
 .hero-name{
   font-size: 34px;
-  font-weight: 700;
+  font-weight: 780;
   letter-spacing: -0.02em;
   margin: 0;
   text-transform: uppercase;
@@ -59,21 +78,22 @@ header{
 .hero-role{
   margin: 8px 0 0;
   font-size: 12px;
-  color: rgba(28,28,28,.65);
-  letter-spacing: 0.22em;
+  color: rgba(28,28,28,.70);
+  letter-spacing: 0.26em;
   text-transform: uppercase;
   display: inline-block;
   padding: 2px 6px;
-  border-radius: 8px;
-  background: linear-gradient(transparent 45%, rgba(239,227,106,.90) 45%);
+  border-radius: var(--r-hard); /* brutal */
+  background: linear-gradient(transparent 50%, rgba(239,227,106,.55) 50%); /* ลดเหลืองลง */
 }
 
 .hero-tagline{
   margin: 10px 0 0;
-  font-size: 12px;                 /* เล็กกว่าบทบาท */
-  letter-spacing: 0.18em;
+  font-size: 12px;
+  letter-spacing: 0.20em;
   text-transform: lowercase;
-  color: rgba(28,28,28,.45);       /* สีเดียวกับ text รอง */
+  color: rgba(28,28,28,.45);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
 }
 
 .cats{
@@ -85,21 +105,25 @@ header{
 }
 
 .btn{
-  border: 1px solid rgba(0,0,0,.10);
-  background: rgba(255,255,255,.6);
+  border: 1px solid rgba(0,0,0,.12);
+  background: rgba(255,255,255,.55);
   color: var(--graphite);
   padding: 8px 12px;
-  border-radius: 999px;
+  border-radius: 10px;
   cursor: pointer;
   font-size: 12px;
   text-decoration: none;
   user-select: none;
+
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  letter-spacing: .06em;
+  text-transform: uppercase;
 }
 
 .btn.active{
   background: var(--graphite);
   color:#fff;
-  border-color: rgba(0,0,0,.15);
+  border-color: rgba(0,0,0,.18);
 }
 
 main{ padding-top: 22px; }
@@ -117,12 +141,14 @@ main{ padding-top: 22px; }
 
 .section-title{
   margin:0;
-  font-size: 15px;
-  letter-spacing: .2px;
+  font-size: 14px;
+  letter-spacing: .10em;
+  text-transform: uppercase;
   display: inline-block;
-  padding: 0 4px;
-  background: linear-gradient(transparent 55%, rgba(239,227,106,.85) 55%);
-  border-radius: 6px;
+  padding: 2px 6px;
+  background: linear-gradient(transparent 64%, rgba(239,227,106,.48) 64%); /* ลดเหลือง */
+  border-radius: var(--r-hard);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
 }
 
 .section-note{
@@ -130,39 +156,97 @@ main{ padding-top: 22px; }
   font-size: 12px;
   color: var(--muted);
   white-space: nowrap;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
 }
 
 /* ===== Catalog Grid (Desktop=3, Phone=2) ===== */
 .grid{
-  --line: rgba(0,0,0,.14);
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr)); /* desktop 3 */
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0;
-  border-top: 1px solid var(--line);
-  border-left: 1px solid var(--line);
-  background: rgba(255,255,255,.30);
+  position: relative;
+  background: transparent;
+
+  /* control for hover fade system */
+  --line-alpha: 1;
+}
+
+/* top + left solid lines */
+.grid::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  z-index: 1;
+
+  background:
+    /* top line */
+    linear-gradient(
+      rgba(var(--grid-r),var(--grid-g),var(--grid-b), calc(var(--grid-a) * var(--line-alpha))),
+      rgba(var(--grid-r),var(--grid-g),var(--grid-b), calc(var(--grid-a) * var(--line-alpha)))
+    ) 0 0 / 100% var(--grid-w) no-repeat,
+
+    /* left line */
+    linear-gradient(
+      rgba(var(--grid-r),var(--grid-g),var(--grid-b), calc(var(--grid-a) * var(--line-alpha))),
+      rgba(var(--grid-r),var(--grid-g),var(--grid-b), calc(var(--grid-a) * var(--line-alpha)))
+    ) 0 0 / var(--grid-w) 100% no-repeat;
 }
 
 @media (max-width: 640px){
-  .grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); } /* phone 2 */
+  .grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 .item{
   display: grid;
   grid-template-rows: auto 1fr auto;
   min-height: 300px;
-  padding: 14px 14px 12px;
+  padding: 16px 16px 14px;
   text-decoration: none;
   color: inherit;
-  background: rgba(255,255,255,.35);
-  border-right: 1px solid rgba(0,0,0,.14);
-  border-bottom: 1px solid rgba(0,0,0,.14);
+
+  background: transparent;
+  position: relative;
 }
 
-.item:hover{ background: rgba(255,255,255,.55); }
+/* right + bottom solid lines per cell */
+.item::before,
+.item::after{
+  content:"";
+  position:absolute;
+  pointer-events:none;
+  z-index: 1;
+  opacity: 1;
+  transition: opacity 180ms ease;
+}
+
+.item::before{
+  top:0; bottom:0;
+  right:0;
+  width: var(--grid-w);
+  background: rgba(var(--grid-r),var(--grid-g),var(--grid-b), var(--grid-a));
+}
+
+.item::after{
+  left:0; right:0;
+  bottom:0;
+  height: var(--grid-w);
+  background: rgba(var(--grid-r),var(--grid-g),var(--grid-b), var(--grid-a));
+}
+
+/* keep this: lines fade on hovered card */
+.item:hover::before,
+.item:hover::after{
+  opacity: var(--fade-hover);
+}
+
+/* subtle hover fill */
+.item:hover{ background: rgba(255,255,255,.14); }
 
 .item:focus-visible{
-  outline: 2px solid var(--scarlet);
+  outline: 2px solid rgba(var(--grid-r),var(--grid-g),var(--grid-b), .95);
   outline-offset: 3px;
 }
 
@@ -170,50 +254,50 @@ main{ padding-top: 22px; }
   .item{ min-height: 260px; padding: 12px 12px 10px; }
 }
 
+/* เพิ่มขนาดชื่องานขึ้นนิดนึง */
 .title{
   margin: 0;
-  font-weight: 520;
-  font-size: 12px;
-  letter-spacing: .06em;
+  font-weight: 720;
+  font-size: 11.5px;            /* เดิม 11px → เพิ่มขึ้นนิด */
+  letter-spacing: .10em;
   text-transform: uppercase;
-  color: rgba(28,28,28,.85);
+  color: rgba(28,28,28,.88);
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  min-height: 32px;
+  min-height: 34px;
+
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
 }
 
 .item:hover .title{ color: var(--scarlet); }
 
-/* Thumbnail back to 16:9 + rounded like the original */
+/* Thumbnail */
 .thumb{
   position: relative;
   width: 100%;
   aspect-ratio: 16 / 9;
   overflow: hidden;
 
-  border-radius: 14px;               /* กลับมาโค้ง */
-  background: rgba(255,255,255,.65);
+  border-radius: var(--r-soft);
+  background: rgba(255,255,255,.58);
 
-  /* กลับมาเป็น "print/card" ลอยนิดๆ */
   box-shadow:
-    0 1px 0 rgba(0,0,0,.04),
-    0 8px 20px rgba(0,0,0,.08);
+    0 1px 0 rgba(0,0,0,.05),
+    0 10px 24px rgba(0,0,0,.10);
 
-  margin: 10px 0 12px;
+  margin: 12px 0 14px;
 }
 
-/* Keep your hover-preview swap working */
 .thumb img, .thumb .player{
   position:absolute; inset:0;
   width:100%; height:100%;
 }
 
-/* กลับมาเป็น thumbnail แบบ cover เหมือนเดิม */
 .thumb img{
   object-fit: cover;
-  padding: 0;                         /* เอา padding ออก */
+  padding: 0;
   transition: opacity 160ms ease;
 }
 
@@ -221,21 +305,12 @@ main{ padding-top: 22px; }
 .thumb .player{ opacity:0; transition:opacity 160ms ease; }
 .thumb.is-playing .player{ opacity:1; }
 
-/* กรอบบางๆ แบบเดิม */
 .thumb::after{
   content:"";
   position:absolute; inset:0;
-  box-shadow: 0 0 0 1px rgba(0,0,0,.10) inset;
-  border-radius: 14px;
+  box-shadow: 0 0 0 1px rgba(0,0,0,.12) inset;
+  border-radius: var(--r-soft);
   pointer-events:none;
-}
-
-/* ให้ hint tap ยังอยู่ถูกตำแหน่ง */
-@media (hover: none) and (pointer: coarse){
-  .yt-hover::before{
-    right: 10px;
-    bottom: 10px;
-  }
 }
 
 .meta{
@@ -251,8 +326,9 @@ main{ padding-top: 22px; }
   margin: 0;
   font-size: 11px;
   color: rgba(28,28,28,.45);
-  letter-spacing: .08em;
+  letter-spacing: .10em;
   text-transform: uppercase;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
 }
 
 .year{
@@ -260,6 +336,8 @@ main{ padding-top: 22px; }
   background: transparent;
   border: 0;
   color: rgba(28,28,28,.75);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  letter-spacing: .06em;
 }
 
 /* See more cell */
@@ -274,9 +352,10 @@ main{ padding-top: 22px; }
 .see-more strong{
   display:block;
   font-size: 12px;
-  letter-spacing: .12em;
+  letter-spacing: .14em;
   text-transform: uppercase;
   text-align:center;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
 }
 
 .see-more span{
@@ -301,10 +380,68 @@ main{ padding-top: 22px; }
     bottom: 10px;
     font-size: 11px;
     padding: 6px 8px;
-    border-radius: 999px;
+    border-radius: 10px;
     background: rgba(28,28,28,.55);
     color: #fff;
     z-index: 2;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+  }
+}
+@media (max-width: 640px){
+
+  /* grid ยัง 2 คอลัมน์เหมือนเดิม */
+  .grid{
+    gap: 0;
+  }
+
+  /* ลดขนาดการ์ด */
+  .item{
+    min-height: 210px;        /* เดิม ~260px */
+    padding: 10px 10px 8px;  /* เดิม 12/10 */
+  }
+
+  /* thumbnail ให้ compact ขึ้น */
+  .thumb{
+    margin: 8px 0 10px;      /* เดิม 12 / 14 */
+    border-radius: 10px;     /* คมขึ้นนิด ดู brutal */
+  }
+
+  /* title ชิดขึ้น ไม่กินพื้นที่ */
+  .title{
+    font-size: 11.5px;         /* คงขนาดที่คุณขอเพิ่มไว้ */
+    line-height: 1.3;
+    min-height: 30px;
+  }
+
+  /* meta ด้านล่างให้แน่น */
+  .meta{
+    margin-top: 6px;
+  }
+
+  .sub{
+    font-size: 10px;
+  }
+
+  .year{
+    font-size: 11px;
+  }
+
+  /* hover / tap preview ไม่ล้น */
+  .thumb img,
+  .thumb .player{
+    object-fit: cover;
+  }
+
+  .cats{
+    gap: 6px;                /* ลดช่องว่างระหว่างปุ่ม */
+  }
+
+  .cats .btn{
+    font-size: 10.5px;       /* จาก ~12px */
+    padding: 6px 10px;       /* กระชับขึ้น */
+    letter-spacing: .04em;  /* ลด tracking */
   }
 }
 
@@ -327,12 +464,16 @@ footer{
   align-items:center;
   gap:10px;
   padding: 10px 12px;
-  border-radius: 999px;
-  border: 1px solid rgba(0,0,0,.10);
-  background: rgba(255,255,255,.6);
+  border-radius: 10px;
+  border: 1px solid rgba(0,0,0,.12);
+  background: rgba(255,255,255,.55);
   text-decoration:none;
   color: var(--graphite);
   font-size: 12px;
+
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  letter-spacing: .06em;
+  text-transform: uppercase;
 }
 
 .icon{ width:18px; height:18px; display:inline-block; }
@@ -341,19 +482,21 @@ footer{
 /* Simple about card */
 .about-card{
   border:1px solid rgba(0,0,0,.14);
-  background:rgba(255,255,255,.35);
+  background:rgba(255,255,255,.24);
   padding:16px;
   line-height:1.8;
+  border-radius: var(--r-hard);
 }
 .about-kicker{
   margin:0 0 10px;
   text-transform:uppercase;
-  letter-spacing:.08em;
+  letter-spacing:.10em;
   font-size:12px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
 }
 .about-text{
   margin:0;
-  color:rgba(28,28,28,.75);
+  color:rgba(28,28,28,.78);
   font-size:14px;
   max-width:90ch;
 }
