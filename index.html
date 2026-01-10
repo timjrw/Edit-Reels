@@ -3,523 +3,64 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>timjrw | Show Reels</title>
-  <style>
-      :root{
-    /* layout */
-    --gap:18px;
-    --radius:14px;
-
-    /* Paper / Ticket (A) */
-    --paper: #f6f5ef;              /* cloud-dancer-ish paper */
-    --paper-warm: #f1efe7;
-    --cloud-dancer: var(--paper);
-    --cloud-surface: #ffffff;
-
-    /* Graphite */
-    --graphite: #1c1c1c;
-    --graphite-soft: rgba(28,28,28,.55);
-
-    /* Scarlet Smile */
-    --scarlet: #c4161c;
-    --scarlet-soft: rgba(196,22,28,.08);
-
-    /* UI */
-    --border-soft: rgba(0,0,0,.08);
-    --muted: rgba(28,28,28,.55);
-
-    /* Ticket highlight */
-    --ticket-yellow: #efe36a;
-
-    /* Paper noise */
-    --noise-opacity: 0.035;
-  }
-
-  *{ box-sizing:border-box; }
-
-  body{
-     margin:0;
-  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
-  color:var(--graphite);
-
-  /* paper gradient base (A) */
-  background: linear-gradient(180deg, var(--paper), var(--paper-warm));
-  position: relative;
-  }
-
-  header{ max-width:1100px; margin:0 auto; padding:44px 20px 10px; }
-  h1{ margin:0 0 6px; font-size:22px; }
-  p{ margin:0; color:var(--muted); }
-  main{ max-width:1100px; margin:0 auto; padding:18px 20px 52px; }
-
-  .topbar{
-    display:flex; align-items:center; justify-content:space-between;
-    gap:12px; margin-top:10px;
-  }
-
-  .filters{ display:flex; gap:12px; flex-wrap:wrap; margin-top: 14px; }
-
-  .btn{
-    border:1px solid rgba(0,0,0,.07);
-    background: rgba(255,255,255,.65);
-    color:var(--graphite);
-    padding:7px 10px;
-    border-radius:999px;
-    cursor:pointer;
-    font-size:12px;
-    backdrop-filter: blur(6px);
-  }
-
-  .btn.active{
-    background: var(--graphite);
-    border-color: rgba(0,0,0,.12);
-    color:#fff;
-  }
-
-  .section{ margin-top: 26px; }
-  .section:first-child{ margin-top: 14px; }
-
-  .section-head{
-    display:flex; align-items:baseline; justify-content:space-between;
-    gap:12px; margin: 0 0 12px;
-  }
-
-  /* Ticket highlight (A) */
-  .section-title{
-    margin:0;
-    font-size:15px;
-    letter-spacing:.2px;
-    display:inline-block;
-    padding: 0 4px;
-    background: linear-gradient(transparent 55%, rgba(239,227,106,.85) 55%);
-    border-radius: 6px;
-  }
-
-  .section-note{ margin:0; font-size:12px; color:var(--muted); }
-
-  .grid{
-    display:grid;
-    grid-template-columns:repeat(3, minmax(0, 1fr));
-    gap:var(--gap);
-  }
-  @media (max-width: 920px){ .grid{ grid-template-columns:repeat(2, 1fr); } }
-  @media (max-width: 820px){
-    .grid{
-      grid-template-columns: repeat(2, 1fr);
-      gap: 14px;
-    }
-  }
-  @media (max-width: 640px){
-    :root{ --gap: 14px; }
-    .meta{ padding-top: 8px; }
-    .title{ font-size: 14px; line-height: 1.35; }
-  }
-
-  .item{ text-decoration:none; color:inherit; display:block; }
-
-  .thumb{
-    position:relative;
-    width:100%;
-    aspect-ratio:16/9;
-    border-radius:var(--radius);
-    overflow:hidden;
-    background:var(--cloud-surface);
-
-    /* make it feel like a "print" sitting on paper */
-    box-shadow:
-      0 1px 0 rgba(0,0,0,.04),
-      0 8px 20px rgba(0,0,0,.06);
-  }
-
-  .thumb img, .thumb .player{
-    position:absolute; inset:0;
-    width:100%; height:100%;
-  }
-  .thumb img{ object-fit:cover; transition:opacity 160ms ease; }
-  .thumb.is-playing img{ opacity:0; }
-  .thumb .player{ opacity:0; transition:opacity 160ms ease; }
-  .thumb.is-playing .player{ opacity:1; }
-
-  .thumb::after{
-    content:"";
-    position:absolute; inset:0;
-    box-shadow: 0 0 0 1px var(--border-soft) inset;
-    border-radius:var(--radius);
-    pointer-events:none;
-  }
-
-  .meta{ padding:10px 2px 0; }
-  .title{
-    font-weight: 430;
-    letter-spacing: 0.01em;
-    color: var(--graphite);
-  }
-
-  .sub{
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    font-size: 11px;
-    color: rgba(28,28,28,.45);
-  }
-
-  .badge{
-    position:absolute; left:10px; top:10px;
-    font-size:11px; padding:6px 8px; border-radius:999px;
-    background:var(--scarlet); color:#fff; z-index:2;
-  }
-
-  .hero-name {
-    font-size: 34px;
-    font-weight: 600;
-    letter-spacing: -0.02em;
-    margin: 0;
-  }
-
-  .hero-role{
-  margin: 10px 0 0;
-  font-size: 12px;
-  color: rgba(28,28,28,.65);
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-
-  /* Ticket highlight */
-  display: inline-block;
-  padding: 2px 6px;
-  border-radius: 8px;
-  background: linear-gradient(
-    transparent 45%,
-    rgba(239,227,106,.90) 45%
-  );
-}
-
-  .hero-note {
-    margin-top: 16px;
-    padding-bottom: 18px;
-    font-size: 12px;
-    color: rgba(28,28,28,.45);
-    max-width: 520px;
-    line-height: 1.7;
-  }
-
-  @media (max-width: 640px){
-    header{ padding: 28px 16px 8px; }
-    main{ padding: 14px 16px 44px; }
-
-    .topbar{
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 14px;
-      margin-top: 0;
-    }
-
-    .filters{
-      width: 100%;
-      gap: 10px;
-    }
-
-    .btn{
-      padding: 10px 12px;
-      font-size: 13px;
-    }
-  }
-
-  @media (hover: none) and (pointer: coarse){
-    .yt-hover::before{
-      content: "Tap to preview";
-      position: absolute;
-      right: 10px;
-      bottom: 10px;
-      font-size: 11px;
-      padding: 6px 8px;
-      border-radius: 999px;
-      background: rgba(28,28,28,.55);
-      color: #fff;
-      z-index: 2;
-    }
-  }
-
-  /* sticky filter on mobile, match paper tone */
-  @media (max-width: 640px){
-    .filters{
-      position: sticky;
-      top: 10px;
-      padding: 10px 0;
-      background: rgba(246,245,239,.86); /* paper-ish */
-      backdrop-filter: blur(8px);
-      z-index: 5;
-    }
-  }
-
-  /* Desktop: ลดขนาด card */
-  @media (min-width: 821px){
-    .item{
-      transform: scale(0.95);
-      transform-origin: top center;
-    }
-  }
-
-  .item:hover .title{ color: var(--scarlet); }
-
-  .item:focus-visible{
-    outline: 2px solid var(--scarlet);
-    outline-offset: 3px;
-  }
-    /* Film grain overlay (soft + premium) */
-body::before{
-  content:"";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-
-  /* multi-layer micro noise */
-  background-image:
-    repeating-linear-gradient(
-      0deg,
-      rgba(0,0,0,.018) 0px,
-      rgba(0,0,0,.018) 1px,
-      transparent 1px,
-      transparent 2px
-    ),
-    repeating-linear-gradient(
-      90deg,
-      rgba(0,0,0,.012) 0px,
-      rgba(0,0,0,.012) 1px,
-      transparent 1px,
-      transparent 3px
-    ),
-    repeating-linear-gradient(
-      45deg,
-      rgba(0,0,0,.010) 0px,
-      rgba(0,0,0,.010) 1px,
-      transparent 1px,
-      transparent 4px
-    );
-
-  opacity: .35;
-  mix-blend-mode: multiply;
-  z-index: 0;
-}
-header, main{ position: relative; z-index: 1; }
-  </style>
+  <title>timjrw | Home</title>
+  <link rel="stylesheet" href="./css/styles.css" />
 </head>
 <body>
-  <header>
-    <div class="hero--art">
-        <h1 class="hero-name">Tim Jirawangso</h1>
-        <p class="hero-role">Video Editor</p>
-      </div>
-      <div class="filters" aria-label="filters">
-        <button class="btn active" data-filter="all">All</button>
-        <button class="btn" data-filter="commercial">Ads / Shorts</button>
-        <button class="btn" data-filter="mv">MV</button>
-      </div>
-    </div>
-  </header>
+  <div class="wrap">
+    <header>
+      <h1 class="hero-name">TIM JIRAWANGSO</h1>
+      <p class="hero-role">Video Editor</p>
+      <p class="hero-tagline">_Crafted frame by frame</p>
 
-  <main id="app"></main>
+      <nav class="cats" aria-label="category">
+        <a class="btn active" data-route="home" href="./index.html">Home</a>
+        <a class="btn" data-route="ads" href="./ads.html">Ads / Shorts</a>
+        <a class="btn" data-route="mv" href="./mv.html">MV</a>
+        <a class="btn" data-route="series" href="./series.html">Series</a>
+        <a class="btn" data-route="about" href="./about.html">About</a>
+      </nav>
+    </header>
 
-  <!-- YouTube IFrame API -->
-  <script src="https://www.youtube.com/iframe_api"></script>
-  <script>
-    const DATA_URL = "data/projects.json";
+    <main id="app"></main>
 
-    // ---------- Render ----------
-    function cardHTML(item) {
-      if (item.platform === "youtube") {
-        const href = `https://youtu.be/${item.id}`;
-        return `
-          <a class="item" href="${href}" target="_blank" rel="noopener">
-            <div class="thumb yt-hover" data-video="${item.id}">
-              <img alt="${escapeHtml(item.title)}" loading="lazy">
-              <div class="player"></div>
-            </div>
-            <div class="meta">
-              <p class="title">${escapeHtml(item.title)}</p>
-              <p class="sub">YouTube</p>
-            </div>
-          </a>
-        `;
-      }
-
-      // Instagram (ภาพนิ่ง + ลิงก์ออกไป)
-      const thumb = item.cover
-  ? item.cover
-  : getYoutubeThumbnail(item.id);
-
-      return `
-        <a class="item" href="${item.url}" target="_blank" rel="noopener">
-          <div class="thumb">
-  <img src="${thumb}" alt="${item.title}">
-</div>
-          <div class="meta">
-            <p class="title">${escapeHtml(item.title)}</p>
-            <p class="sub">Instagram</p>
-          </div>
+    <footer>
+      <div class="social" aria-label="social links">
+        <a class="iconbtn" href="https://instagram.com/YOUR_HANDLE" target="_blank" rel="noopener" aria-label="Instagram">
+          <span class="icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Z" stroke="currentColor" stroke-width="1.6"/>
+              <path d="M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.6"/>
+              <path d="M17.5 6.5h.01" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            </svg>
+          </span>
+          Instagram
         </a>
-      `;
-    }
 
-    function sectionHTML(title, note, items) {
-      return `
-        <section class="section">
-          <div class="section-head">
-            <h2 class="section-title">${escapeHtml(title)}</h2>
-            <p class="section-note">${escapeHtml(note)}</p>
-          </div>
-          <div class="grid">
-            ${items.map(cardHTML).join("")}
-          </div>
-        </section>
-      `;
-    }
+        <a class="iconbtn" href="https://line.me/R/ti/p/YOUR_LINE_ID" target="_blank" rel="noopener" aria-label="LINE">
+          <span class="icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M20 12c0 4.4-4 8-8 8-1.2 0-2.3-.2-3.3-.6L4 20l.9-3.5C4.3 15.3 4 13.7 4 12c0-4.4 4-8 8-8s8 3.6 8 8Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          LINE
+        </a>
 
-    function render(appEl, data, filter) {
-      const filtered = (filter === "all") ? data : data.filter(x => x.category === filter);
+        <a class="iconbtn" href="mailto:you@email.com" aria-label="Email">
+          <span class="icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M4 6h16v12H4V6Z" stroke="currentColor" stroke-width="1.6" />
+              <path d="m4 7 8 6 8-6" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          Email
+        </a>
+      </div>
+    </footer>
+  </div>
 
-      const mv = filtered.filter(x => x.category === "mv");
-      const commercial = filtered.filter(x => x.category === "commercial");
-
-      appEl.innerHTML = [
-  commercial.length ? sectionHTML("Commercial / Shorts", "Ads / Branded Content", commercial) : "",
-  mv.length ? sectionHTML("MV", "Music Videos", mv) : ""
-].join("");
-
-      // ตั้งรูปปก YouTube thumbnail
-      document.querySelectorAll(".yt-hover").forEach(el => {
-        const id = el.dataset.video;
-        const img = el.querySelector("img");
-        img.src = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
-      });
-
-      // หลัง render เสร็จ ค่อย bind hover (ถ้า API พร้อมแล้ว)
-      if (window.__YT_READY__) {
-        bindHover();
-      }
-    }
-
-    // ---------- YouTube Hover Preview ----------
-    const players = new Map(); // el -> YT.Player
-
-    function ensurePlayer(el) {
-      if (players.has(el)) return players.get(el);
-      const id = el.dataset.video;
-      const mount = el.querySelector(".player");
-
-      const player = new YT.Player(mount, {
-        videoId: id,
-        playerVars: {
-          autoplay: 0,
-          controls: 0,
-          modestbranding: 1,
-          rel: 0,
-          playsinline: 1
-        },
-        events: {
-          onReady: (e) => e.target.mute()
-        }
-      });
-
-      players.set(el, player);
-      return player;
-    }
-
-    function play(el) {
-      el.classList.add("is-playing");
-      const p = ensurePlayer(el);
-
-      // loop แบบเนียน: ใกล้จบแล้ว seek กลับ
-      if (!el._loopTimer) {
-        el._loopTimer = setInterval(() => {
-          try {
-            const dur = p.getDuration?.() || 0;
-            const cur = p.getCurrentTime?.() || 0;
-            if (dur && cur > dur - 0.25) p.seekTo(0, true);
-          } catch {}
-        }, 200);
-      }
-
-      // บางที player ยังไม่พร้อมทันที → ลองซ้ำสั้นๆ
-      let tries = 0;
-      const t = setInterval(() => {
-        tries++;
-        try {
-          if (p?.playVideo) {
-            p.mute();
-            p.playVideo();
-            clearInterval(t);
-          }
-        } catch {}
-        if (tries > 20) clearInterval(t);
-      }, 50);
-    }
-
-    function stop(el) {
-      const p = players.get(el);
-      if (p?.pauseVideo) {
-        try { p.pauseVideo(); } catch {}
-      }
-      el.classList.remove("is-playing");
-      if (el._loopTimer) {
-        clearInterval(el._loopTimer);
-        el._loopTimer = null;
-      }
-    }
-
-    function bindHover() {
-      document.querySelectorAll(".yt-hover").forEach(el => {
-        if (el.__bound) return;
-        el.__bound = true;
-
-        el.addEventListener("mouseenter", () => play(el));
-        el.addEventListener("mouseleave", () => stop(el));
-
-        // มือถือ: แตะครั้งแรก = preview สั้นๆ (กันเด้งไปลิงก์ทันที)
-        el.addEventListener("touchstart", (ev) => {
-          if (!el.classList.contains("is-playing")) {
-            ev.preventDefault();
-            play(el);
-            setTimeout(() => stop(el), 2000);
-          }
-        }, { passive: false });
-      });
-    }
-
-    // YouTube API callback
-    window.onYouTubeIframeAPIReady = () => {
-      window.__YT_READY__ = true;
-      bindHover();
-    };
-
-    // ---------- Init ----------
-    const app = document.getElementById("app");
-    let projects = [];
-    let currentFilter = "all";
-
-    function escapeHtml(str) {
-      return String(str ?? "").replace(/[&<>"']/g, s => ({
-        "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
-      }[s]));
-    }
-
-    fetch(DATA_URL)
-      .then(r => r.json())
-      .then(data => {
-        projects = data;
-        render(app, projects, currentFilter);
-      })
-      .catch(err => {
-        app.innerHTML = `<p style="color:#b00">โหลดข้อมูลไม่สำเร็จ: ${escapeHtml(err.message)}</p>`;
-      });
-
-    // filter buttons
-    document.querySelectorAll(".btn[data-filter]").forEach(btn => {
-      btn.addEventListener("click", () => {
-        document.querySelector(".btn.active")?.classList.remove("active");
-        btn.classList.add("active");
-        currentFilter = btn.dataset.filter;
-        render(app, projects, currentFilter);
-      });
-    });
-  </script>
+  <script src="https://www.youtube.com/iframe_api"></script>
+  <script src="./js/app.js"></script>
+  <script> TIMJRW.initPage("home"); </script>
 </body>
 </html>
