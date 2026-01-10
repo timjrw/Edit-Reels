@@ -1,0 +1,359 @@
+:root{
+  --paper:#f6f5ef;
+  --paper-warm:#f1efe7;
+  --graphite:#1c1c1c;
+  --muted: rgba(28,28,28,.55);
+  --scarlet:#c4161c;
+  --ticket-yellow:#efe36a;
+}
+
+*{ box-sizing:border-box; }
+
+body{
+  margin:0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  color:var(--graphite);
+  background: linear-gradient(180deg, var(--paper), var(--paper-warm));
+  position: relative;
+}
+
+/* film grain */
+body::before{
+  content:"";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    repeating-linear-gradient(0deg, rgba(0,0,0,.018) 0px, rgba(0,0,0,.018) 1px, transparent 1px, transparent 2px),
+    repeating-linear-gradient(90deg, rgba(0,0,0,.012) 0px, rgba(0,0,0,.012) 1px, transparent 1px, transparent 3px),
+    repeating-linear-gradient(45deg, rgba(0,0,0,.010) 0px, rgba(0,0,0,.010) 1px, transparent 1px, transparent 4px);
+  opacity: .35;
+  mix-blend-mode: multiply;
+  z-index: 0;
+}
+
+header, main, footer{ position: relative; z-index: 1; }
+
+.wrap{
+  max-width:1100px;
+  margin:0 auto;
+  padding: 32px 20px 44px;
+}
+@media (max-width: 640px){
+  .wrap{ padding: 22px 14px 40px; }
+}
+
+header{
+  padding-bottom: 18px;
+  border-bottom: 1px solid rgba(0,0,0,.08);
+}
+
+.hero-name{
+  font-size: 34px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.hero-role{
+  margin: 8px 0 0;
+  font-size: 12px;
+  color: rgba(28,28,28,.65);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: 8px;
+  background: linear-gradient(transparent 45%, rgba(239,227,106,.90) 45%);
+}
+
+.hero-tagline{
+  margin: 10px 0 0;
+  font-size: 12px;                 /* เล็กกว่าบทบาท */
+  letter-spacing: 0.18em;
+  text-transform: lowercase;
+  color: rgba(28,28,28,.45);       /* สีเดียวกับ text รอง */
+}
+
+.cats{
+  margin-top: 14px;
+  display:flex;
+  gap:10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.btn{
+  border: 1px solid rgba(0,0,0,.10);
+  background: rgba(255,255,255,.6);
+  color: var(--graphite);
+  padding: 8px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 12px;
+  text-decoration: none;
+  user-select: none;
+}
+
+.btn.active{
+  background: var(--graphite);
+  color:#fff;
+  border-color: rgba(0,0,0,.15);
+}
+
+main{ padding-top: 22px; }
+
+/* Section */
+.section{ margin-top: 26px; }
+
+.section-head{
+  display:flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0 0 12px;
+}
+
+.section-title{
+  margin:0;
+  font-size: 15px;
+  letter-spacing: .2px;
+  display: inline-block;
+  padding: 0 4px;
+  background: linear-gradient(transparent 55%, rgba(239,227,106,.85) 55%);
+  border-radius: 6px;
+}
+
+.section-note{
+  margin:0;
+  font-size: 12px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+/* ===== Catalog Grid (Desktop=3, Phone=2) ===== */
+.grid{
+  --line: rgba(0,0,0,.14);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr)); /* desktop 3 */
+  gap: 0;
+  border-top: 1px solid var(--line);
+  border-left: 1px solid var(--line);
+  background: rgba(255,255,255,.30);
+}
+
+@media (max-width: 640px){
+  .grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); } /* phone 2 */
+}
+
+.item{
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 300px;
+  padding: 14px 14px 12px;
+  text-decoration: none;
+  color: inherit;
+  background: rgba(255,255,255,.35);
+  border-right: 1px solid rgba(0,0,0,.14);
+  border-bottom: 1px solid rgba(0,0,0,.14);
+}
+
+.item:hover{ background: rgba(255,255,255,.55); }
+
+.item:focus-visible{
+  outline: 2px solid var(--scarlet);
+  outline-offset: 3px;
+}
+
+@media (max-width: 640px){
+  .item{ min-height: 260px; padding: 12px 12px 10px; }
+}
+
+.title{
+  margin: 0;
+  font-weight: 520;
+  font-size: 12px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: rgba(28,28,28,.85);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 32px;
+}
+
+.item:hover .title{ color: var(--scarlet); }
+
+/* Thumbnail back to 16:9 + rounded like the original */
+.thumb{
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+
+  border-radius: 14px;               /* กลับมาโค้ง */
+  background: rgba(255,255,255,.65);
+
+  /* กลับมาเป็น "print/card" ลอยนิดๆ */
+  box-shadow:
+    0 1px 0 rgba(0,0,0,.04),
+    0 8px 20px rgba(0,0,0,.08);
+
+  margin: 10px 0 12px;
+}
+
+/* Keep your hover-preview swap working */
+.thumb img, .thumb .player{
+  position:absolute; inset:0;
+  width:100%; height:100%;
+}
+
+/* กลับมาเป็น thumbnail แบบ cover เหมือนเดิม */
+.thumb img{
+  object-fit: cover;
+  padding: 0;                         /* เอา padding ออก */
+  transition: opacity 160ms ease;
+}
+
+.thumb.is-playing img{ opacity:0; }
+.thumb .player{ opacity:0; transition:opacity 160ms ease; }
+.thumb.is-playing .player{ opacity:1; }
+
+/* กรอบบางๆ แบบเดิม */
+.thumb::after{
+  content:"";
+  position:absolute; inset:0;
+  box-shadow: 0 0 0 1px rgba(0,0,0,.10) inset;
+  border-radius: 14px;
+  pointer-events:none;
+}
+
+/* ให้ hint tap ยังอยู่ถูกตำแหน่ง */
+@media (hover: none) and (pointer: coarse){
+  .yt-hover::before{
+    right: 10px;
+    bottom: 10px;
+  }
+}
+
+.meta{
+  margin-top: auto;
+  padding: 0;
+  display:flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.sub{
+  margin: 0;
+  font-size: 11px;
+  color: rgba(28,28,28,.45);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.year{
+  font-size: 12px;
+  background: transparent;
+  border: 0;
+  color: rgba(28,28,28,.75);
+}
+
+/* See more cell */
+.see-more{
+  display:grid;
+  place-items:center;
+  height: 100%;
+  background: transparent;
+  min-height: 140px;
+}
+
+.see-more strong{
+  display:block;
+  font-size: 12px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  text-align:center;
+}
+
+.see-more span{
+  display:block;
+  margin-top: 6px;
+  font-size: 12px;
+  color: var(--muted);
+  text-align:center;
+}
+
+.empty{
+  margin:0;
+  color: rgba(28,28,28,.55);
+}
+
+/* Mobile hover hint */
+@media (hover: none) and (pointer: coarse){
+  .yt-hover::before{
+    content: "Tap to preview";
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    font-size: 11px;
+    padding: 6px 8px;
+    border-radius: 999px;
+    background: rgba(28,28,28,.55);
+    color: #fff;
+    z-index: 2;
+  }
+}
+
+/* Footer */
+footer{
+  border-top: 1px solid rgba(0,0,0,.08);
+  margin-top: 28px;
+  padding-top: 16px;
+}
+
+.social{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  align-items:center;
+}
+
+.iconbtn{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  padding: 10px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(0,0,0,.10);
+  background: rgba(255,255,255,.6);
+  text-decoration:none;
+  color: var(--graphite);
+  font-size: 12px;
+}
+
+.icon{ width:18px; height:18px; display:inline-block; }
+.icon svg{ width:100%; height:100%; display:block; }
+
+/* Simple about card */
+.about-card{
+  border:1px solid rgba(0,0,0,.14);
+  background:rgba(255,255,255,.35);
+  padding:16px;
+  line-height:1.8;
+}
+.about-kicker{
+  margin:0 0 10px;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  font-size:12px;
+}
+.about-text{
+  margin:0;
+  color:rgba(28,28,28,.75);
+  font-size:14px;
+  max-width:90ch;
+}
